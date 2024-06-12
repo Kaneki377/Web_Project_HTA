@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+	<head th:replace="fragments :: page_head('Customers - Shopme Admin', 'none')"></head>
+<body>
+	<div class = "container-fluid">
+		<!-- Navigation bar -->		
+		<div th:replace="~{navigation :: menu}"></div>
+		
+		<div>
+			<h2>Manage Customers</h2>
+			
+			<a th:href="@{/customers/export/csv}" class="fa-solid fa-file-csv fa-2x icon-dark mr-2"></a>
+		</div>
+		
+		<!-- Search Bar and Message-->
+		<div th:replace="~{fragments :: search_form_and_message}"></div>
+		
+		<!-- Table hiển thị danh sách Customers-->
+		<div class="full-details">
+			<table class = "table table-bordered table-striped table-hover table-responsive-xl">
+				<thead class = "thead-dark">
+					<tr>
+						<th th:replace="~{fragments :: column_link('id', 'ID', 'none')}"></th>
+
+						<th th:replace="~{fragments :: column_link('firstName', 'First Name', 'none')}"></th>
+						
+						<th th:replace="~{fragments :: column_link('lastName', 'Last Name', 'none')}"></th>				
+						
+						<th class="hideable-column" th:replace="~{fragments :: column_link('email', 'E-mail', 'none')}"></th>		
+					
+						<th class="hideable-column" th:replace="~{fragments :: column_link('city', 'City', 'none')}"></th>
+					
+						<th class="hideable-column" th:replace="~{fragments :: column_link('state', 'State', 'none')}"></th>
+					
+						<th th:replace="~{fragments :: column_link('country', 'Country', 'none')}"></th>
+						<th th:replace="~{fragments :: column_link('enabled', 'Enabled', 'none')}"></th>
+						<th></th>  
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="customer : ${listCustomers}">
+						<td>[[${customer.id}]]</td>
+						<td>[[${customer.firstName}]]</td>
+						<td>[[${customer.lastName}]]</td>
+						
+						<td class="hideable-column">[[${customer.email}]]</td>
+						<td class="hideable-column">[[${customer.city}]]</td>
+						<td class="hideable-column">[[${customer.state}]]</td>
+						<td>[[${customer.country.name}]]</td>
+						
+						<td>
+							<div th:replace="~{fragments :: status(${customer.enabled}, 'customer', '/customers/' + ${customer.id})}"></div>
+						</td>
+						
+						<td>
+							<a class="fas fa-file-alt fa-2x icon-green link-detail"
+								th:href="@{'/customers/detail/' + ${customer.id}}"
+								title="View details of this customer"></a>
+							&nbsp;
+							<div th:replace="~{fragments :: edit('customer', '/customers/edit/' + ${customer.id})}"></div>
+							&nbsp;
+							<div th:replace="~{fragments :: delete('customer', ${customer.id}, '/customers/delete/' + ${customer.id}, true)}"></div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<!-- Responsive mobile -->
+		<div class="less-details">
+		<div th:each="customer : ${listCustomers}" class="row m-1">
+			<div class="col-4">
+				<span>[[${customer.fullName}]]</span>		
+			</div>
+			<div class="col-8">
+				<div>
+					<span>[[${customer.country.name}]]</span>	
+				</div>
+				<div>
+					<div th:replace="~{fragments :: status(${customer.enabled}, 'customer', '/customers/' + ${customer.id})}"></div>
+					&nbsp;
+					
+					<a class="fas fa-file-alt fa-2x icon-green link-detail"
+						th:href="@{'/customers/detail/' + ${customer.id}}"
+						title="View details of this customer"></a>
+					&nbsp;
+					<div th:replace="~{fragments :: edit('customer', '/customers/edit/' + ${customer.id})}"></div>
+					&nbsp;
+					<div th:replace="~{fragments :: delete('customer', ${customer.id}, '/customers/delete/' + ${customer.id}, true)}"></div>
+				</div>
+			</div>
+				<div>&nbsp;</div>
+			</div>	
+		</div>
+	<!-- Pagination User -->
+	<div th:replace="fragments :: pagination('customers')"></div>
+	
+	<!-- Dialog thoong bao delete customer -->
+	<div th:replace="modal_fragments :: confirm_modal"></div>
+	
+	<!-- Dialog show customer Detail infor -->
+	<div class="modal fade" id="detailModal">
+		<div class="modal-dialog modal-xl">
+			<div class="modal-content">
+			</div>
+		</div>
+	</div>
+	
+	<!-- Footer -->
+	<div th:replace="~{fragments :: footer}"></div>
+	
+</div>	
+<script th:src="@{/js/common_list.js}"></script>
+<script type="text/javascript">
+	moduleURL = "[[@{/customers}]]";
+	
+	entityName = "customer";
+</script>
+</body>
+</html>
