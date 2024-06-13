@@ -1,3 +1,6 @@
+decimalSeparator = decimalPointType == 'COMMA' ? ',' : '.';
+thousandsSeparator = thousandsPointType == 'COMMA' ? ',' : '.';
+
 $(document).ready(function(){
 	$(".linkMinus").on("click", function(evt){
 		evt.preventDefault();
@@ -42,7 +45,7 @@ function increaseQuantity(link){
 }
 
 function updateQuantity(productId, quantity){
-	url = contextPath + "cart/update/" + productId + "/" + quantity;
+	var url = contextPath + "cart/update/" + productId + "/" + quantity;
 
 	$.ajax({
 		type: "POST",
@@ -51,6 +54,7 @@ function updateQuantity(productId, quantity){
 			xhr.setRequestHeader(csrfHeaderName, csrfValue);
 		}
 	}).done(function(updatedSubtotal) {	
+		console.log("Updated Subtotal:", updatedSubtotal); // Debugging line
 		updateSubtotal(updatedSubtotal, productId);
 		updateTotal();
 	}).fail(function() {
@@ -59,24 +63,24 @@ function updateQuantity(productId, quantity){
 }
 
 function updateSubtotal(updatedSubtotal, productId){
-	formatedSubtotal = $.number(updatedSubtotal, 2);
-	$("#subtotal" + productId).text(formatedSubtotal);	
+	$("#subtotal" + productId).text(formatCurrency(updatedSubtotal));	
 }
 
 function updateTotal(){
-	total = 0.0;
-	productCount = 0;
+	var total = 0.0;
+	var productCount = 0;
 	
 	$(".subtotal").each(function(index, element){
 		productCount++;
-		total += parseFloat(element.innerHTML.replaceAll(",", ""));
+		total += parseFloat(clearCurrencyFormat(element.innerHTML));
 	});
+	
+	 console.log("Total before formatting:", total); // Debugging line
 	
 	if(productCount < 1){
 		showEmptyShoppingCart();
 	}else{
-		formatedTotal = $.number(total, 2);
-		$("#total").text(formatedTotal);
+		$("#total").text(formatCurrency(total));
 	}
 	
 }
@@ -116,4 +120,13 @@ function updateCountNumbers(){
 	$(".divCount").each(function(index, element){
 		element.innerHTML = "" + (index + 1);
 	});
+}
+
+function formatCurrency(amount){
+	return $.number(amount, decimalDigits, decimalSeparator, thousandsSeparator);
+}
+
+function clearCurrencyFormat(numberString){
+	var result = numberString.replaceAll(thousandsSeparator, "");
+	return result.replaceAll(decimalSeparator, ".");
 }
