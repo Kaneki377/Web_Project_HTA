@@ -7,7 +7,7 @@
 		<artifactId>ShopmeWebParent</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	
+	<!-- hello-->
 	<artifactId>ShopmeBackEnd</artifactId>
 	
 	<name>ShopmeBackEnd</name>
