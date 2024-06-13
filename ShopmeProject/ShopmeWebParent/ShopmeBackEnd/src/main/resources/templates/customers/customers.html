@@ -47,7 +47,7 @@
 						<td class="hideable-column">[[${customer.email}]]</td>
 						<td class="hideable-column">[[${customer.city}]]</td>
 						<td class="hideable-column">[[${customer.state}]]</td>
-						<td>[[${customer.country.name}]]</td>
+						<td th:text="${customer.country != null ? customer.country.name : 'No country'}">[[${customer.country.name}]]</td>
 						
 						<td>
 							<div th:replace="~{fragments :: status(${customer.enabled}, 'customer', '/customers/' + ${customer.id})}"></div>
@@ -70,7 +70,7 @@
 		<div class="less-details">
 		<div th:each="customer : ${listCustomers}" class="row m-1">
 			<div class="col-4">
-				<span>[[${customer.fullName}]]</span>		
+				<span th:text="${customer.country != null ? customer.country.name : 'No Country'}">[[${customer.country.name}]]</span>		
 			</div>
 			<div class="col-8">
 				<div>
