@@ -6,6 +6,11 @@ server:
       charset: UTF-8
       enabled: true
       force: true
+logging:
+  level:
+    com:
+      shopme: ERROR
+    root: 
 spring:
   datasource: 
     password: Kaneki377
