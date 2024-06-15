@@ -106,9 +106,7 @@ public class CustomerController {
 		
 		return "customer/account_form";
 	}
-	
-
-	
+		
 	@PostMapping("/update_account_details")
 	public String updateAccountDetails(Model model, Customer customer, RedirectAttributes ra,
 			HttpServletRequest request) {
@@ -121,6 +119,8 @@ public class CustomerController {
 		
 		if("address_book".equals(redirectOption)) {
 			redirectURL = "redirect:/address_book";
+		}else if("cart".equals(redirectOption)) {
+			redirectURL = "redirect:/cart";
 		}
 		
 		return redirectURL;
