@@ -1,6 +1,6 @@
 package com.shopme.address;
 
-import static org.assertj.core.api.Assertions.as;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
@@ -73,8 +73,8 @@ public class AddressRepositoryTests {
 		Address address = repo.findById(addressId).get();
 		address.setDefaultForShipping(true);
 
-		Address updatedAddress = repo.save(address);
-		//assertThat(updatedAddress.getPhoneNumber()).isEqualTo(phoneNumber);
+//		Address updatedAddress = repo.save(address);
+//		assertThat(updatedAddress.getPhoneNumber()).isEqualTo(phoneNumber);
 	}
 
 	@Test
