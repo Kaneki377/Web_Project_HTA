@@ -41,4 +41,9 @@ public class AddressService {
 		
 		addressRepo.setNonDefaultForOthers(defaultAddressId, customerId);
 	}
+	
+	public Address getDefaultAddress(Customer customer) {
+		
+		return addressRepo.findDefaultByCustomer(customer.getId());
+	}
 }
