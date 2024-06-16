@@ -120,13 +120,13 @@
 							Product Cost <div th:replace="fragments :: format_currency(${detail.productCost})" />
 						</div>
 						<div>
-							[[#{orders.details.subtotal}]] [[${detail.quantity}]] X
+							Subtotal [[${detail.quantity}]] X
 							<div th:replace="fragments :: format_currency(${detail.unitPrice})" />
 							 = 
 							 <div th:replace="fragments :: format_currency(${detail.subtotal})" />
 						</div>
 						<div>
-							[[#{orders.details.shippingcost}]] <div th:replace="fragments :: format_currency(${detail.shippingCost})" />
+							Shipping cost <div th:replace="fragments :: format_currency(${detail.shippingCost})" />
 						</div>
 					</th:block>	
 									
@@ -136,67 +136,67 @@
 		  </div>
 		  <div class="tab-pane fade p-3" id="shipping" role="tabpanel" aria-labelledby="shipping-tab">
 			  <div class="form-group row">
-			    <label class="col-sm-2 col-form-label">[[#{orders.details.deliverdates}]]</label>
+			    <label class="col-sm-2 col-form-label">Deliver date</label>
 			    <div class="col-sm-10">
 			      <input type="text" readonly class="form-control" th:value="${order.deliverDays}">
 			    </div>
 			  </div>		  
 			  <div class="form-group row">
-			    <label class="col-sm-2 col-form-label">[[#{orders.details.expecteddeliverdate}]]</label>
+			    <label class="col-sm-2 col-form-label">Expected deliver date</label>
 			    <div class="col-sm-10">
 			    	<span th:text="${#dates.format(order.deliverDate, 'E, dd MMM yyyy')}"></span>
 			    </div>
 			  </div>			  
 			  <div class="form-group row">
-			    <label class="col-sm-2 col-form-label">[[#{orders.details.firstname}]]</label>
+			    <label class="col-sm-2 col-form-label">First name</label>
 			    <div class="col-sm-10">
 			      <input type="text" readonly class="form-control" th:value="${order.firstName}">
 			    </div>
 			  </div>
 			  <div class="form-group row">
-			    <label class="col-sm-2 col-form-label">[[#{orders.details.lastname}]]</label>
+			    <label class="col-sm-2 col-form-label">Last name</label>
 			    <div class="col-sm-10">
 			      <input type="text" readonly class="form-control" th:value="${order.lastName}">
 			    </div>
 			  </div>
 			  <div class="form-group row">
-			    <label class="col-sm-2 col-form-label">[[#{orders.details.phonenumber}]]</label>
+			    <label class="col-sm-2 col-form-label">Phone number</label>
 			    <div class="col-sm-10">
 			      <input type="text" readonly class="form-control" th:value="${order.phoneNumber}">
 			    </div>
 			  </div>
 			  <div class="form-group row">
-			    <label class="col-sm-2 col-form-label">[[#{orders.details.addressline1}]]</label>
+			    <label class="col-sm-2 col-form-label">Address line 1</label>
 			    <div class="col-sm-10">
 			      <input type="text" readonly class="form-control" th:value="${order.addressLine1}">
 			    </div>
 			  </div>
 			  <div class="form-group row">
-			    <label class="col-sm-2 col-form-label">[[#{orders.details.addressline2}]]</label>
+			    <label class="col-sm-2 col-form-label">Address line 2</label>
 			    <div class="col-sm-10">
 			      <input type="text" readonly class="form-control" th:value="${order.addressLine2}">
 			    </div>
 			  </div>
 			  <div class="form-group row">
-			    <label class="col-sm-2 col-form-label">[[#{orders.details.city}]]</label>
+			    <label class="col-sm-2 col-form-label">City</label>
 			    <div class="col-sm-10">
 			      <input type="text" readonly class="form-control" th:value="${order.city}">
 			    </div>
 			  </div>
 			  <div class="form-group row">
-			    <label class="col-sm-2 col-form-label">[[#{orders.details.state}]]</label>
+			    <label class="col-sm-2 col-form-label">State</label>
 			    <div class="col-sm-10">
 			      <input type="text" readonly class="form-control" th:value="${order.state}">
 			    </div>
 			  </div>
 			  <div class="form-group row">
-			    <label class="col-sm-2 col-form-label">[[#{orders.details.country}]]</label>
+			    <label class="col-sm-2 col-form-label">Country</label>
 			    <div class="col-sm-10">
 			      <input type="text" readonly class="form-control" th:value="${order.country}">
 			    </div>
 			  </div>
 			  <div class="form-group row">
-			    <label class="col-sm-2 col-form-label">[[#{orders.details.postalcode}]]</label>
+			    <label class="col-sm-2 col-form-label">Post code</label>
 			    <div class="col-sm-10">
 			      <input type="text" readonly class="form-control" th:value="${order.postalCode}">
 			    </div>
