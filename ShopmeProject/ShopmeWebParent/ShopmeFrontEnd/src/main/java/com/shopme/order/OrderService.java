@@ -91,7 +91,7 @@ public class OrderService {
 		track.setNotes(notes);
 		
 		order.getOrderTracks().add(track);
-		order.getStatus(OrderStatus.RETURN_REQUESTED);
+		order.setStatus(OrderStatus.RETURN_REQUESTED);
 		
 		repo.save(order);
 	}

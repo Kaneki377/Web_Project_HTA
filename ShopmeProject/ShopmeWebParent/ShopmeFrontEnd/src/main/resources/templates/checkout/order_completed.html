@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head th:replace="~{fragments :: page_head('Order Completed', 'none')}"/>
+<body>
+	<div class="container-fluid">
+	<!-- Navigation bar -->
+		<div th:replace="~{navigation :: header_menu}"></div>
+		
+		<!-- Search bar -->
+		<div th:replace="~{navigation :: search_nav}"></div>
+		<div class="text-center border border-secondary rounded m-3 p-3">
+			<h2>Your Order Has Been Completed</h2>
+		</div>
+	
+	
+		<div th:replace="~{navigation :: footer_menu}"></div>
+	</div>
+</body>
+</html>
