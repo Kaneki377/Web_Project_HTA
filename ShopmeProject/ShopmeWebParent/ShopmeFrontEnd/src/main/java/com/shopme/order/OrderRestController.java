@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.shopme.Ultility;
 import com.shopme.common.entity.Customer;
 import com.shopme.common.exception.CustomerNotFoundException;
+import com.shopme.common.exception.OrderNotFoundException;
 import com.shopme.customer.CustomerService;
 
 @RestController
