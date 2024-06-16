@@ -1,4 +1,4 @@
-package com.shopme.common.entity;
+package com.shopme.common.entity.product;
 
 import java.beans.Transient;
 import java.util.ArrayList;
@@ -18,6 +18,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.shopme.common.entity.Brand;
+import com.shopme.common.entity.Category;
 
 @Entity
 @Table(name = "products")

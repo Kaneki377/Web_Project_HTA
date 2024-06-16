@@ -27,3 +27,15 @@ function showDeleteConfirmModal(link, entityName){
 					+ entityName + " ID " + entityId + "?");
 	$("#confirmModal").modal();
 }
+
+function handleLinkViewCustomerDetails(cssClass, modalId) {
+	$(cssClass).on("click", function(e) {
+		e.preventDefault();
+		linkDetailURL = $(this).attr("href");
+		$(modalId).modal("show").find(".modal-content").load(linkDetailURL);
+	});		
+}
+
+function handleDefaultDetailLinkClick() {
+	handleLinkViewCustomerDetails(".link-detail", "#detailModal");	
+}
