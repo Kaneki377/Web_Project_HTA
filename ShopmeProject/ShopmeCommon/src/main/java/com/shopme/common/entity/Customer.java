@@ -82,6 +82,8 @@ public class Customer extends AbstractAddressWithCountry {
 	public void setCreatedTime(Date createdTime) {
 		this.createdTime = createdTime;
 	}
+	
+	
 
 	
 	@Override
