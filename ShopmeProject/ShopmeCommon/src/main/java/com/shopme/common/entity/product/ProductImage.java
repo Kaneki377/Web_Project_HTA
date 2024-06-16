@@ -11,13 +11,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.shopme.common.entity.IdBasedEntity;
+
 @Entity
 @Table(name = "product_images")
-public class ProductImage {
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+public class ProductImage extends IdBasedEntity {
 	
 	@Column(nullable = false)
 	private String name;
@@ -43,14 +41,6 @@ public class ProductImage {
 		this.product = product;
 	}
 
-	//Getter & Setter
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
 
 	public String getName() {
 		return name;

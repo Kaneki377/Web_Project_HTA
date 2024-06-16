@@ -1,5 +1,6 @@
 package com.shopme.admin.order;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
 import javax.transaction.Transactional;
@@ -12,6 +13,8 @@ import org.springframework.stereotype.Service;
 
 import com.shopme.admin.error.OrderNotFoundException;
 import com.shopme.admin.paging.PagingAndSortingHelper;
+import com.shopme.admin.setting.country.CountryRepository;
+import com.shopme.common.entity.Country;
 import com.shopme.common.entity.order.Order;
 
 @Service
@@ -22,7 +25,7 @@ public class OrderService {
 
 	private OrderRepository orderRepo;
 	
-//	private CountryRepository countryRepo;
+	private CountryRepository countryRepo;
 	
 	public void listByPage(int pageNum, PagingAndSortingHelper helper) {
 		
@@ -68,5 +71,9 @@ public class OrderService {
 		}
 
 		orderRepo.deleteById(id);
+	}
+	
+	public List<Country> listAllCountries() {
+		return countryRepo.findAllByOrderByNameAsc();
 	}
 }

@@ -13,11 +13,8 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "shipping_rates")
-public class ShippingRate {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
-	
+public class ShippingRate extends IdBasedEntity {
+
 	private float rate;
 	private int days;
 	
@@ -33,13 +30,6 @@ public class ShippingRate {
 	//Constructor
 	public ShippingRate() {
 		
-	}
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
 	}
 
 	public float getRate() {

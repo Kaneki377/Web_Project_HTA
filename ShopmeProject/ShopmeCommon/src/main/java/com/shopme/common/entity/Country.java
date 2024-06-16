@@ -12,11 +12,8 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "countries")
-public class Country {
+public class Country extends IdBasedEntity {
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
 	
 	@Column(nullable = false, length = 45)
 	private String name;
@@ -55,14 +52,7 @@ public class Country {
 		this.code = code;
 	}
 
-	//Getter & Setter
-	public Integer getId() {
-		return id;
-	}
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
 
 	public String getName() {
 		return name;
