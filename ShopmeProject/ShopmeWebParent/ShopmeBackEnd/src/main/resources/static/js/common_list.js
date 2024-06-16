@@ -35,6 +35,7 @@ function handleDetailLinkClick(cssClass, modalId) {
 		$(modalId).modal("show").find(".modal-content").load(linkDetailURL);
 	});		
 }
+// heloo
 
 function handleDefaultDetailLinkClick() {
 	handleDetailLinkClick(".link-detail", "#detailModal");	
