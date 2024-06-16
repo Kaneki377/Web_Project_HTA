@@ -2,10 +2,20 @@ package com.shopme.admin.order;
 
 import java.util.NoSuchElementException;
 
+import javax.transaction.Transactional;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
+
 import com.shopme.admin.error.OrderNotFoundException;
 import com.shopme.admin.paging.PagingAndSortingHelper;
+import com.shopme.common.entity.order.Order;
 
 @Service
+@Transactional
 public class OrderService {
 
 	private static final int ORDERS_PER_PAGE = 10;
@@ -14,9 +24,6 @@ public class OrderService {
 	
 //	private CountryRepository countryRepo;
 	
-	
-	
-	@Override
 	public void listByPage(int pageNum, PagingAndSortingHelper helper) {
 		
 		String sortField = helper.getSortField();
@@ -45,7 +52,6 @@ public class OrderService {
 		helper.updateModelAttributes(pageNum, page);		
 	}
 	
-	@Override
 	public Order get(Integer id) throws OrderNotFoundException {
 		try {
 			return orderRepo.findById(id).get();
@@ -54,7 +60,7 @@ public class OrderService {
 		}
 	}
 	
-	@Override
+
 	public void delete(Integer id) throws OrderNotFoundException {
 		Long count = orderRepo.countById(id);
 		if (count == null || count == 0) {

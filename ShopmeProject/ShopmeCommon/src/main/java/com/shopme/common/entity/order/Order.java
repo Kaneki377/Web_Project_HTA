@@ -79,6 +79,10 @@ public class Order {
 	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<OrderDetail> orderDetails = new HashSet<>();
 	
+	//Constructor
+	public Order() {
+		
+	}
 	public Order(Integer id, Date orderTime, float productCost, float subtotal, float total) {
 		this.id = id;
 		this.orderTime = orderTime;

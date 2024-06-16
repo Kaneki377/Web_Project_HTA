@@ -2,8 +2,26 @@ package com.shopme.admin.order;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.slf4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.annotation.OrderUtils;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import com.shopme.admin.error.OrderNotFoundException;
+import com.shopme.admin.paging.PagingAndSortingParam;
+import com.shopme.admin.security.ShopmeUserDetails;
 import com.shopme.admin.setting.SettingService;
+import com.shopme.common.entity.Country;
+import com.shopme.common.entity.order.Order;
+import com.shopme.common.entity.setting.Setting;
 
 @Controller
 public class OrderController {
@@ -87,17 +105,11 @@ public class OrderController {
 	public String editOrder(@PathVariable("id") Integer id, Model model, RedirectAttributes ra,
 			HttpServletRequest request) {
 		
-		LOGGER.info("OrderController | editOrder is called");
-		
 		try {
 			Order order = orderService.get(id);;
 
 			List<Country> listCountries = orderService.listAllCountries();
 			
-			LOGGER.info("OrderController | editOrder | order : " + order.toString());
-			LOGGER.info("OrderController | editOrder | listCountries : " + listCountries);
-			LOGGER.info("OrderController | editOrder | pageTitle : " + "Edit Order (ID: " + id + ")" );
-
 			model.addAttribute("pageTitle", "Edit Order (ID: " + id + ")");
 			model.addAttribute("order", order);
 			model.addAttribute("listCountries", listCountries);
@@ -107,8 +119,6 @@ public class OrderController {
 		} catch (OrderNotFoundException ex) {
 			ra.addFlashAttribute("message", ex.getMessage());
 			
-			LOGGER.info("OrderController | editOrder | message : " + ex.getMessage());
-			
 			return defaultRedirectURL;
 		}
 
@@ -117,12 +127,8 @@ public class OrderController {
 	@PostMapping("/order/save")
 	public String saveOrder(Order order, HttpServletRequest request, RedirectAttributes ra) {
 		
-		LOGGER.info("OrderController | saveOrder is called");
-		
 		String countryName = request.getParameter("countryName");
-		
-		LOGGER.info("OrderController | saveOrder | countryName : " + countryName);
-		
+				
 		order.setCountry(countryName);
 
 		OrderUtil.updateProductDetails(order, request);
@@ -132,7 +138,6 @@ public class OrderController {
 
 		ra.addFlashAttribute("messageSuccess", "The order ID " + order.getId() + " has been updated successfully");
 		
-		LOGGER.info("OrderController | saveOrder | message : " + "The order ID " + order.getId() + " has been updated successfully");
 
 		return defaultRedirectURL;
 	}

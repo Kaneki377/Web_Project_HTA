@@ -6,8 +6,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.shopme.common.entity.Setting;
-import com.shopme.common.entity.SettingCategory;
+import com.shopme.common.entity.setting.Setting;
+import com.shopme.common.entity.setting.SettingCategory;
+
 
 @Service
 public class SettingService {
@@ -17,7 +18,7 @@ public class SettingService {
 	
 	public List<Setting> listAllSettings(){
 		
-		return (List <Setting>) repo.findAll();
+		return (List<Setting>) repo.findAll();
 	}
 	
 	public GeneralSettingBag getGeneralSettings() {
