@@ -1,4 +1,4 @@
-package com.shopme.shoppingcart;
+package com.shopme.checkout;
 
 import java.util.List;
 
@@ -17,50 +17,51 @@ import com.shopme.common.entity.Customer;
 import com.shopme.common.entity.ShippingRate;
 import com.shopme.customer.CustomerService;
 import com.shopme.shipping.ShippingRateService;
+import com.shopme.shoppingcart.ShoppingCartService;
 
 @Controller
-public class ShoppingCartController {
-
-	@Autowired
-	private ShoppingCartService cartService;
+public class CheckOutController {
 	
 	@Autowired
+	private CheckOutService checkOutService;
+	
+	@Autowired 
 	private CustomerService customerService;
 	
 	@Autowired
 	private AddressService addressService;
 	
 	@Autowired
-	private ShippingRateService shippingRateService;
+	private ShippingRateService shipService;
 	
-	@GetMapping("/cart")
-	public String viewCart(Model model, HttpServletRequest request) {
+	@Autowired
+	private ShoppingCartService cartService;
+	
+	@GetMapping("/checkout")
+	public String showCheckoutPage(Model model, HttpServletRequest request) {
 		Customer customer = getAuthenticatedCustomer(request);
-		List<CartItem> cartItems = cartService.listCartItem(customer);
-		
-		float estimatedTotal = 0.0F;
-		
-		for(CartItem item : cartItems) {
-			estimatedTotal += item.getSubTotal();
-		}
-		
 		Address defaultAddress = addressService.getDefaultAddress(customer);
 		ShippingRate shippingRate = null;
-		boolean usePrimaryAddressAsDefault = false;
 		
 		if(defaultAddress != null) {
-			shippingRate = shippingRateService.getShippingRateForAddress(defaultAddress);
+			model.addAttribute("shippingAddress", defaultAddress.toString());
+			shippingRate = shipService.getShippingRateForAddress(defaultAddress);
 		}else {
-			usePrimaryAddressAsDefault = true;
-			shippingRate = shippingRateService.getShippingRateForCustomer(customer);
+			model.addAttribute("shippingAddress", customer.toString());
+			shippingRate = shipService.getShippingRateForCustomer(customer);		
 		}
 		
-		model.addAttribute("usePrimaryAddressAsDefault", usePrimaryAddressAsDefault);
-		model.addAttribute("shippingSupported", shippingRate != null);
-		model.addAttribute("cartItems", cartItems);
-		model.addAttribute("estimatedTotal", estimatedTotal);
+		if(shippingRate == null) {
+			return "redirect:/cart";
+		}
 		
-		return "cart/shopping_cart";
+		List<CartItem> cartItems = cartService.listCartItem(customer);
+		CheckOutInfo checkoutInfo = checkOutService.prepareCheckOut(cartItems, shippingRate);
+		
+		model.addAttribute("checkoutInfo", checkoutInfo);
+		model.addAttribute("cartItems", cartItems);
+		
+		return "checkout/checkout";
 	}
 	
 	private Customer getAuthenticatedCustomer(HttpServletRequest request) {

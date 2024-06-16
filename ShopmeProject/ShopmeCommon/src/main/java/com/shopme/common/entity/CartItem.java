@@ -28,6 +28,9 @@ public class CartItem {
 	private Product product;
 	
 	private int quantity;
+	
+	@Transient
+	private float shippingCost;
 
 	//Constructor
 	public CartItem() {
@@ -65,6 +68,15 @@ public class CartItem {
 
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
+	}
+	
+	@Transient
+	public float getShippingCost() {
+		return shippingCost;
+	}
+
+	public void setShippingCost(float shippingCost) {
+		this.shippingCost = shippingCost;
 	}
 
 	@Override
