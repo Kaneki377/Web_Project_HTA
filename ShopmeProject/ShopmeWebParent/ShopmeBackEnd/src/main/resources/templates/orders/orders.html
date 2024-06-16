@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments :: page_head(#{orders.title.orders}, 'none')" />
+<head th:replace="fragments :: page_head('Customers - Shopme Admin', 'none')" />
 <body>
 <div class="container-fluid">
 	<div th:replace="navigation :: menu"></div>
 	<div>
-		<h2>[[#{orders.title.manageorders}]]</h2>	
+		<h2>Manage Orders</h2>	
 	</div>
 
 	<div th:replace="fragments :: search_form_and_message"></div>
@@ -14,22 +14,14 @@
 		<table class="table table-bordered table-striped table-hover table-responsive-xl">
 			<thead class="thead-dark">
 				<tr>
-					<th th:replace="fragments :: column_link('id', #{orders.title.id}, 'none')" />
-					<th th:replace="fragments :: column_link('customer', #{orders.title.customer}, 'none')" />
-					<th th:replace="fragments :: column_link('total', '#{orders.title.total}, 'none')" />
-					<th th:replace="fragments :: column_link('orderTime', #{orders.title.ordertime}, 'none')" />
-					
-					<th class="hideable-column">
-					<th th:replace="fragments :: column_link('destination', #{orders.title.destination}, 'tag')" />
-					</th>
+					<th th:replace="fragments :: column_link('id', 'ID', 'none')" />
+					<th th:replace="fragments :: column_link('customer', 'Customer', 'none')" />
+					<th th:replace="fragments :: column_link('total', 'Total', 'none')" />
+					<th th:replace="fragments :: column_link('orderTime', 'Order Time', 'none')" />
+					<th th:replace="fragments :: column_link('destination', 'Destination', 'tag')" />
 
-					<th class="hideable-column">
-					<th th:replace="fragments :: column_link('paymentMethod', #{orders.title.paymentmethod}, 'tag')" />
-					</th>
-
-					<th class="hideable-column">
-					<th th:replace="fragments :: column_link('status', #{orders.title.status}, 'tag')" />
-					</th>
+					<th th:replace="fragments :: column_link('paymentMethod', 'Payment Method', 'tag')" />
+					<th th:replace="fragments :: column_link('status', 'Status', 'tag')" />
 
 					<th></th>
 				</tr>								
@@ -120,8 +112,8 @@
 	entityName = "order";
 
 	$(document).ready(function() {
-		handleLinkViewCustomerDetails();
-		handleLinkViewCustomerDetails(".linkCustomerDetail", "#customerDetailModal");
+		handleDefaultDetailLinkClick();
+		handleDetailLinkClick(".linkCustomerDetail", "#customerDetailModal");
 	});
 
 </script>
