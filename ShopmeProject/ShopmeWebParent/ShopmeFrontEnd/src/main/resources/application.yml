@@ -13,7 +13,7 @@ logging:
     root: 
 spring:
   datasource: 
-    password: 123456
+    password: Kaneki377
     url: jdbc:mysql://localhost:3306/shopmedb?serverTimezone=UTC
     username: root
   jpa:

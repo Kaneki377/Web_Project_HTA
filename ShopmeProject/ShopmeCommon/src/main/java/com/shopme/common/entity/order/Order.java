@@ -257,6 +257,30 @@ public class Order extends AbstractAddress{
 	}
 	
 	@Transient
+	public String getShippingAddress() {
+		String address = firstName;
+		
+		if(lastName != null && !lastName.isEmpty()) {
+			address += " " + lastName;
+		}
+		
+		if(!addressLine1.isEmpty()) address += ": " + addressLine1;
+		
+		if(addressLine2 != null && !addressLine2.isEmpty()) address += ", " + addressLine2;
+		 
+		if(!city.isEmpty()) address += ", " + city;
+		
+		if(state != null && !state.isEmpty()) address += ", " + state;
+		
+		address += ", " + country;
+		
+		if(!postalCode.isEmpty()) address += ", Postal Code: " + postalCode;
+		if(!phoneNumber.isEmpty()) address += ", Phone Number: " + phoneNumber;
+		
+		return address;
+	}
+	
+	@Transient
 	public boolean isCOD() {
 		return paymentMethod.equals(PaymentMethod.COD);
 	}
