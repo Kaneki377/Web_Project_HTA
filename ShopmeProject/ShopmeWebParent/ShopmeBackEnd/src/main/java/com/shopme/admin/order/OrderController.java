@@ -132,9 +132,6 @@ public class OrderController {
 				
 		order.setCountry(countryName);
 
-//		OrderUtil.updateProductDetails(order, request);
-//		OrderUtil.updateOrderTracks(order, request);
-//
 		orderService.save(order);		
 
 		ra.addFlashAttribute("messageSuccess", "The order ID " + order.getId() + " has been updated successfully");

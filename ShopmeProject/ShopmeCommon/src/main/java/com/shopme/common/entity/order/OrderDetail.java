@@ -84,6 +84,11 @@ public class OrderDetail extends IdBasedEntity{
 	public void setOrder(Order order) {
 		this.order = order;
 	}
+
+	public int getQuantity() {
+		return quantity;
+	}
+	
 	
 	
 	
