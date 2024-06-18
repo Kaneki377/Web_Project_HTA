@@ -9,7 +9,7 @@ public abstract class AbstractAddressWithCountry extends AbstractAddress {
 
 	@ManyToOne
 	@JoinColumn(name = "country_id")
-	private Country country;
+	protected Country country;
 	
 	public Country getCountry() {
 		return country;
