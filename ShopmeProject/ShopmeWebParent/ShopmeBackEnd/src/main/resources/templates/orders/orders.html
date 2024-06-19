@@ -44,12 +44,12 @@
 					<td class="hideable-column">[[${order.status}]]</td>
 
 					<td>
-						<!--
+						
 						<a class="fas fa-file-alt fa-2x icon-green link-detail"
 							th:href="@{'/orders/detail/' + ${order.id}}"
 							th:title="#{orders.title.orderdetail}"
 							></a>	
-							-->				
+									
 						&nbsp; 
 						<div th:replace="fragments :: edit('order', '/orders/edit/' + ${order.id})" />
 						&nbsp; 
