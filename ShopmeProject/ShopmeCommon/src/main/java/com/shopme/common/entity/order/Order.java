@@ -314,4 +314,19 @@ public class Order extends AbstractAddress{
 	public boolean isProcessing() {
 		return hasStatus(OrderStatus.PROCESSING);
 	}
+	
+	@Transient
+	public String getProductNames() {
+		String productNames = "";
+
+		productNames = "<ul>";
+
+		for (OrderDetail detail : orderDetails) {
+			productNames += "<li>" + detail.getProduct().getShortName() + "</li>";			
+		}
+
+		productNames += "</ul>";
+
+		return productNames;
+	}
 }

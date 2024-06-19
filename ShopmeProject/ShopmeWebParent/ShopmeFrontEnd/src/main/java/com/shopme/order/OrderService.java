@@ -74,6 +74,14 @@ public class OrderService {
 			orderDetails.add(orderDetail);
 		}
 		
+		OrderTrack track = new OrderTrack();
+		track.setOrder(newOrder);
+		track.setStatus(OrderStatus.NEW);
+		track.setNotes(OrderStatus.NEW.defaultDescription());
+		track.setUpdatedTime(new Date());
+		
+		newOrder.getOrderTracks().add(track);
+		
 		return repo.save(newOrder);
 	}
 	
@@ -95,7 +103,7 @@ public class OrderService {
 		track.setUpdatedTime(new Date());
 		track.setStatus(OrderStatus.RETURN_REQUESTED);
 		
-		String notes = "Reasion: " + request.getReason();
+		String notes = "Reason: " + request.getReason();
 		if (!"".equals(request.getNote())) {
 			notes += ". " + request.getNote();
 		}
@@ -107,6 +115,9 @@ public class OrderService {
 		
 		repo.save(order);
 	}
+	
+
+	
 	public Page<Order> listForCustomerByPage(Customer customer, int pageNum, 
 			String sortField, String sortDir, String keyword) {
 		

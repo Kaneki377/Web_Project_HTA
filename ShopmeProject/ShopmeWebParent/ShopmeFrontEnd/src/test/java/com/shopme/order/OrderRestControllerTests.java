@@ -24,7 +24,7 @@ public class OrderRestControllerTests {
 	private ObjectMapper objectMapper;
 	
 	@Test
-	@WithUserDetails("tina.jamerson.2021@gmail.com")
+	@WithUserDetails("N21DCCN120@student.ptithcm.edu.vn")
 	public void testSendOrderReturnRequestFailed() throws Exception {
 		Integer orderId = 1111;
 		OrderReturnRequest returnRequest = new OrderReturnRequest(orderId, "", "");
@@ -40,7 +40,7 @@ public class OrderRestControllerTests {
 	}
 	
 	@Test
-	@WithUserDetails("tina.jamerson.2021@gmail.com")
+	@WithUserDetails("N21DCCN120@student.ptithcm.edu.vn")
 	public void testSendOrderReturnRequestSuccessful() throws Exception {
 		Integer orderId = 17;
 		String reason = "I bought the wrong items";
