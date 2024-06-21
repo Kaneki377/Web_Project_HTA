@@ -4,10 +4,9 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.annotation.OrderUtils;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
+
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.shopme.admin.error.OrderNotFoundException;
 import com.shopme.admin.paging.PagingAndSortingHelper;
 import com.shopme.admin.paging.PagingAndSortingParam;
-import com.shopme.admin.security.ShopmeUserDetails;
+
 import com.shopme.admin.setting.SettingService;
 import com.shopme.common.entity.Country;
 import com.shopme.common.entity.order.Order;
@@ -36,8 +35,7 @@ public class OrderController {
 	
 	@GetMapping("/orders")
 	public String listFirstPage() {
-		
-		
+			
 		return defaultRedirectURL;
 	}
 
@@ -45,9 +43,7 @@ public class OrderController {
 	public String listByPage(
 			@PagingAndSortingParam(listName = "listOrders", moduleURL = "/orders") PagingAndSortingHelper helper,
 			@PathVariable(name = "pageNum") int pageNum,
-			@AuthenticationPrincipal ShopmeUserDetails loggedUser,
 			HttpServletRequest request) {
-		
 		
 		orderService.listByPage(pageNum, helper);
 		loadCurrencySetting(request);
@@ -65,25 +61,18 @@ public class OrderController {
 	
 	@GetMapping("/orders/detail/{id}")
 	public String viewOrderDetails(@PathVariable("id") Integer id, Model model, 
-			RedirectAttributes ra, HttpServletRequest request,
-			@AuthenticationPrincipal ShopmeUserDetails loggedUser
-			) {
-		
-		
+			RedirectAttributes ra, HttpServletRequest request
+			) {		
 		try {
-			Order order = orderService.get(id);
-
-			
+			Order order = orderService.get(id);		
 			loadCurrencySetting(request);		
-
 			model.addAttribute("order", order);
 
 			return "orders/order_details_modal";
 		} catch (OrderNotFoundException ex) {
-			ra.addFlashAttribute("messageError", ex.getMessage());			
+			ra.addFlashAttribute("message", ex.getMessage());			
 			return defaultRedirectURL;
 		}
-
 	}
 	
 	@GetMapping("/orders/delete/{id}")
@@ -91,12 +80,10 @@ public class OrderController {
 		
 		try {
 			orderService.delete(id);
-			ra.addFlashAttribute("messageSuccess", "The order ID " + id + " has been deleted.");
-			
-			
+			ra.addFlashAttribute("message", "The order ID " + id + " has been deleted.");
+					
 		} catch (OrderNotFoundException ex) {
-			ra.addFlashAttribute("messageError", ex.getMessage());
-			
+			ra.addFlashAttribute("message", ex.getMessage());			
 		}
 
 		return defaultRedirectURL;
@@ -104,11 +91,9 @@ public class OrderController {
 	
 	@GetMapping("/orders/edit/{id}")
 	public String editOrder(@PathVariable("id") Integer id, Model model, RedirectAttributes ra,
-			HttpServletRequest request) {
-		
+			HttpServletRequest request) {	
 		try {
 			Order order = orderService.get(id);;
-
 			List<Country> listCountries = orderService.listAllCountries();
 			
 			model.addAttribute("pageTitle", "Edit Order (ID: " + id + ")");
@@ -126,20 +111,16 @@ public class OrderController {
 	}
 	
 	@PostMapping("/order/save")
-	public String saveOrder(Order order, HttpServletRequest request, RedirectAttributes ra) {
-		
-		String countryName = request.getParameter("countryName");
-				
+	public String saveOrder(Order order, HttpServletRequest request, RedirectAttributes ra) {	
+		String countryName = request.getParameter("countryName");				
 		order.setCountry(countryName);
 
 		orderService.save(order);		
 
-		ra.addFlashAttribute("messageSuccess", "The order ID " + order.getId() + " has been updated successfully");
-		
-
+		ra.addFlashAttribute("message", "The order ID " + order.getId() + " has been updated successfully");
 		return defaultRedirectURL;
 	}
-	}
+}
 
 
 

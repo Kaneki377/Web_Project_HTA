@@ -8,9 +8,9 @@
 				class="form-inline my-2">
 			<input type="search" required class="form-control mr-sm-2" name="keyword"
 				th:value="${keyword}"
-				th:placeholder="#{orders.search.productname}"
+				placeholder="product name"
 				/>
-			<input type="submit" class="btn btn-outline-success" value="#{orders.search.title}" />
+			<input type="submit" class="btn btn-outline-success" value="Search"/>
 		</form>
 	</div>
 
@@ -46,7 +46,7 @@
 
 			if (window.parent.isProductAlreadyAdded(productId)) {
 				showWarningModal("The product '" + productName + "' was already added.");
-			} else {				
+			} else {			
 				window.parent.addProduct(productId, productName);
 			}
 		});

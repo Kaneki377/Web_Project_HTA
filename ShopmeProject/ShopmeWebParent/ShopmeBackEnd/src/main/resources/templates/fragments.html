@@ -37,7 +37,7 @@
 	
 	<!-- Footer -->
 	<div th:fragment="footer" class="text-center m-3">
-		<p>Memory Zone Control Panel - Copyright &copy; Memory Zone</p>
+		<p>HTA Control Panel - Copyright &copy; HTA</p>
 	</div>	  
 
 	<!-- Status  -->
@@ -141,6 +141,13 @@
 		<span th:text="${#dates.format(dateTime, 'yyyy-MM-dd HH:mm:ss')}"></span>
 	</div>
 	<!-- FORMAT TIME END -->
+	
+	<!-- CURRENCY INPUT -->
+	<div th:fragment="currency_input(amount)" th:remove="tag">
+		<input type="text" readonly class="form-control" th:value="${(CURRENCY_SYMBOL_POSITION == 'Before price' ? CURRENCY_SYMBOL : '') + #numbers.formatDecimal(amount, 1, THOUSANDS_POINT_TYPE, DECIMAL_DIGITS, DECIMAL_POINT_TYPE) + (CURRENCY_SYMBOL_POSITION == 'After price' ? CURRENCY_SYMBOL : '')}">
+	</div>
+	<!-- CURRENCY INPUT END -->
+	
 <script th:src="@{/js/common_list.js}"></script>
 </body>
 </html>

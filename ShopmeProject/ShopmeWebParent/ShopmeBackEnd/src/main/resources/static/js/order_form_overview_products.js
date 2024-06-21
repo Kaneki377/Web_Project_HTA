@@ -78,7 +78,8 @@ function setAndFormatNumberForField(fieldId, fieldValue) {
 }
 
 function getNumberValueRemovedThousandSeparator(fieldRef) {
-	fieldValue = fieldRef.val().replace(",", "");
+	fieldString = fieldRef.val().replace(/\./g, '');
+	fieldValue = fieldString.replace(/,/g, '.');
 	return parseFloat(fieldValue);
 } 
 
@@ -100,6 +101,7 @@ function updateSubtotalWhenQuantityChanged(input) {
 	newSubtotal = parseFloat(quantityValue) * priceValue;
 
 	setAndFormatNumberForField("subtotal" + rowNumber, newSubtotal);
+
 }
 
 function formatProductAmounts() {
@@ -161,7 +163,7 @@ function processFormBeforeSubmit() {
 }
 
 function removeThousandSeparatorForField(fieldRef) {
-	fieldRef.val(fieldRef.val().replace(",", ""));
+	fieldRef.val(fieldRef.val().replace(/,/g, ''));
 }
 
 function setCountryName() {

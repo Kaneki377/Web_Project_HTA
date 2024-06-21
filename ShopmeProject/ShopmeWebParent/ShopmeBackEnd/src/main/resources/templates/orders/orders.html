@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments :: page_head('Customers - Shopme Admin', 'none')" />
+<head th:replace="fragments :: page_head('Orders - Shopme Admin', 'none')" />
 <body>
 <div class="container-fluid">
 	<div th:replace="navigation :: menu"></div>
@@ -15,12 +15,13 @@
 			<thead class="thead-dark">
 				<tr>
 					<th th:replace="fragments :: column_link('id', 'ID', 'none')" />
-					<th th:replace="fragments :: column_link('customer', 'Customer', 'none')" />
-					<th th:replace="fragments :: column_link('total', 'Total', 'none')" />
-					<th th:replace="fragments :: column_link('orderTime', 'Order Time', 'none')" />
-					<th th:replace="fragments :: column_link('destination', 'Destination', 'none')" />
-					<th th:replace="fragments :: column_link('paymentMethod', 'Payment Method', 'none')" />
-					<th th:replace="fragments :: column_link('status', 'Status', 'none')" />
+					<th th:replace="fragments :: column_link('customer', 'CUSTOMER', 'none')" />
+					<th th:replace="fragments :: column_link('total', 'TOTAL', 'none')" />
+					<th th:replace="fragments :: column_link('orderTime', 'ORDER TIME', 'none')" />
+					
+					<th class="hideable-column" th:replace="fragments :: column_link('destination', 'DESTINATION', 'none')" />
+					<th class="hideable-column" th:replace="fragments :: column_link('paymentMethod', 'PAYMENT METHOD', 'none')" />
+					<th class="hideable-column" th:replace="fragments :: column_link('status', 'STATUS', 'none')" />
 
 					<th></th>
 				</tr>								
@@ -47,7 +48,7 @@
 						
 						<a class="fas fa-file-alt fa-2x icon-green link-detail"
 							th:href="@{'/orders/detail/' + ${order.id}}"
-							th:title="#{orders.title.orderdetail}"
+							title="View details of this order"
 							></a>	
 									
 						&nbsp; 
@@ -73,7 +74,7 @@
 				<div>
 					<a class="fas fa-file-alt fa-2x icon-green link-detail"
 						th:href="@{'/orders/detail/' + ${order.id}}"
-						th:title="#{orders.title.orderdetail}"
+						title="#{orders.title.orderdetail}"
 						></a>					
 					&nbsp; 
 					<div th:replace="fragments :: edit('order', '/orders/edit/' + ${order.id})" />

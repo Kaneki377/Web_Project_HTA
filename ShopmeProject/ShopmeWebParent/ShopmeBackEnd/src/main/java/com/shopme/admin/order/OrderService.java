@@ -25,7 +25,7 @@ import com.shopme.common.entity.order.OrderTrack;
 @Transactional
 public class OrderService {
 
-	private static final int ORDERS_PER_PAGE = 10;
+	private static final int ORDERS_PER_PAGE = 6;
 	
 	@Autowired
 	private OrderRepository orderRepo;

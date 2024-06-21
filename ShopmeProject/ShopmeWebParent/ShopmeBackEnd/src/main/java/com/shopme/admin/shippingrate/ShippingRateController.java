@@ -106,4 +106,6 @@ public class ShippingRateController {
 		}
 		return defaultRedirectURL;
 	}	
+	
+	
 }

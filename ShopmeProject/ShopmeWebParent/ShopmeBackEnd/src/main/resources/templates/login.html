@@ -12,9 +12,11 @@
 <body>
 	<div class = "container-fluid text-center">
 	
+	<div>&nbsp;</div>
 		<div>
-			<img th:src="@{/images/002 ShopmeAdminBig.png}" />
+			<img th:src="@{/images/memoryBig.jfif}" />
 		</div>
+		<div>&nbsp;</div>
 	
 		<form th:action="@{/login}" method="post" style="max-width: 350px; margin: 0 auto;">
 			<div th:if="${param.error}">
@@ -26,7 +28,7 @@
 			</div>
 			
 			<div class="border border-secondary rounded p-3">
-				<p>Access to Shopme Control Panel</p>
+				<p>Access to HTA Control Panel</p>
 				<p>
 					<input type = "email" name="email" class="form-control" placeholder="E-mail" required/>
 				</p>
@@ -45,7 +47,7 @@
 		</form>
 
 		<div>
-			<p>Shopme Control Panel - Copyright &copy; Shopme</p>
+			<p>HTA Control Panel - Copyright &copy;</p>
 		</div>
 	
 	</div>

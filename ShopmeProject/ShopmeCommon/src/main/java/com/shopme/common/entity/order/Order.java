@@ -14,9 +14,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -27,12 +25,11 @@ import javax.persistence.Transient;
 import com.shopme.common.entity.AbstractAddress;
 import com.shopme.common.entity.Address;
 import com.shopme.common.entity.Customer;
-import com.shopme.common.entity.IdBasedEntity;
+
 
 @Entity
 @Table(name= "orders")
 public class Order extends AbstractAddress{
-
 	
 	@Column(nullable = false, length = 45)
 	private String country;
@@ -93,7 +90,6 @@ public class Order extends AbstractAddress{
 			e.printStackTrace();
 		} 		
 	}
-	
 	
 	public List<OrderTrack> getOrderTracks() {
 		return orderTracks;
@@ -221,16 +217,15 @@ public class Order extends AbstractAddress{
 	}
 	
 	public boolean hasStatus(OrderStatus status) {
-			
-			
-			for (OrderTrack aTrack : orderTracks) {
-				if (aTrack.getStatus().equals(status)) {
 				
-					return true;
-				}
+		for (OrderTrack aTrack : orderTracks) {
+			if (aTrack.getStatus().equals(status)) {
+			
+				return true;
 			}
-			return false;
 		}
+		return false;
+	}
 	
 	public void copyAddressFromCustomer() {
 		setFirstName(customer.getFirstName());

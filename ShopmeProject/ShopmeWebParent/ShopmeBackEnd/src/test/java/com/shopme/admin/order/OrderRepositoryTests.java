@@ -3,11 +3,10 @@ package com.shopme.admin.order;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
-
 import org.junit.jupiter.api.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
@@ -19,6 +18,7 @@ import com.shopme.common.entity.Customer;
 import com.shopme.common.entity.order.Order;
 import com.shopme.common.entity.order.OrderDetail;
 import com.shopme.common.entity.order.OrderStatus;
+import com.shopme.common.entity.order.OrderTrack;
 import com.shopme.common.entity.order.PaymentMethod;
 import com.shopme.common.entity.product.Product;
 
@@ -26,8 +26,6 @@ import com.shopme.common.entity.product.Product;
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 @Rollback(false)
 public class OrderRepositoryTests {
-	
-	private static final Logger LOGGER = LoggerFactory.getLogger(OrderRepositoryTests.class);
 
 	@Autowired 
 	private OrderRepository repo;
@@ -37,13 +35,23 @@ public class OrderRepositoryTests {
 	
 	@Test
 	public void testCreateNewOrderWithSingleProduct() {
-		Customer customer = entityManager.find(Customer.class, 1);
+		Customer customer = entityManager.find(Customer.class, 9);
 		Product product = entityManager.find(Product.class, 1);
 
 		Order mainOrder = new Order();
-		mainOrder.setOrderTime(new Date());
+//		mainOrder.setOrderTime(new Date());
+		mainOrder.setFirstName(customer.getFirstName());
+		mainOrder.setLastName(customer.getLastName());
+		mainOrder.setPhoneNumber(customer.getPhoneNumber());
+		mainOrder.setAddressLine1(customer.getAddressLine1());
+		mainOrder.setAddressLine2(customer.getAddressLine2());
+		mainOrder.setCity(customer.getCity());
+		mainOrder.setCountry(customer.getCountry().getName());
+		mainOrder.setPostalCode(customer.getPostalCode());
+		mainOrder.setState(customer.getState());
+		
 		mainOrder.setCustomer(customer);
-//		mainOrder.copyAddressFromCustomer();
+		mainOrder.copyAddressFromCustomer();
 
 		mainOrder.setShippingCost(10);
 		mainOrder.setProductCost(product.getCost());
@@ -54,7 +62,7 @@ public class OrderRepositoryTests {
 		mainOrder.setPaymentMethod(PaymentMethod.CREDIT_CARD);
 		mainOrder.setStatus(OrderStatus.NEW);
 		mainOrder.setDeliverDate(new Date());
-		mainOrder.setDeliverDays(1);
+		mainOrder.setDeliverDays(4);
 
 		OrderDetail orderDetail = new OrderDetail();
 		orderDetail.setProduct(product);
@@ -75,13 +83,13 @@ public class OrderRepositoryTests {
 	@Test
 	public void testCreateNewOrderWithMultipleProducts() {
 		Customer customer = entityManager.find(Customer.class, 10);
-		Product product1 = entityManager.find(Product.class, 20);
-		Product product2 = entityManager.find(Product.class, 40);
+		Product product1 = entityManager.find(Product.class, 2);
+		Product product2 = entityManager.find(Product.class, 4);
 
 		Order mainOrder = new Order();
 		mainOrder.setOrderTime(new Date());
 		mainOrder.setCustomer(customer);
-//		mainOrder.copyAddressFromCustomer();
+		mainOrder.copyAddressFromCustomer();
 
 		OrderDetail orderDetail1 = new OrderDetail();
 		orderDetail1.setProduct(product1);
@@ -162,4 +170,30 @@ public class OrderRepositoryTests {
 		assertThat(result).isNotPresent();
 	}
 	
+	@Test
+	public void testUpdateOrderTrack() {
+		Integer orderId = 1;
+		Order order = repo.findById(orderId).get();
+		
+		
+		OrderTrack newTrack = new OrderTrack();
+		newTrack.setOrder(order);
+		newTrack.setUpdatedTime(new Date());
+		newTrack.setStatus(OrderStatus.PAID);
+		newTrack.setNotes(OrderStatus.PAID.defaultDescription());
+		
+		OrderTrack processingTrack = new OrderTrack();
+		processingTrack.setOrder(order);
+		processingTrack.setUpdatedTime(new Date());
+		processingTrack.setStatus(OrderStatus.REFUNDED);
+		processingTrack.setNotes(OrderStatus.REFUNDED.defaultDescription());
+		
+		List<OrderTrack> orderTracks = order.getOrderTracks();
+		orderTracks.add(newTrack);
+		orderTracks.add(processingTrack);
+		
+		Order updatedOrder = repo.save(order);
+		
+		assertThat(updatedOrder.getOrderTracks()).hasSizeGreaterThan(1);
+	}
 }
