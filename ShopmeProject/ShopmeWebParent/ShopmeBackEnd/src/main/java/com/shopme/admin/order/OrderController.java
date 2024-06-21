@@ -1,6 +1,10 @@
 package com.shopme.admin.order;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -21,6 +25,10 @@ import com.shopme.admin.paging.PagingAndSortingParam;
 import com.shopme.admin.setting.SettingService;
 import com.shopme.common.entity.Country;
 import com.shopme.common.entity.order.Order;
+import com.shopme.common.entity.order.OrderDetail;
+import com.shopme.common.entity.order.OrderStatus;
+import com.shopme.common.entity.order.OrderTrack;
+import com.shopme.common.entity.product.Product;
 import com.shopme.common.entity.setting.Setting;
 
 @Controller
@@ -115,10 +123,80 @@ public class OrderController {
 		String countryName = request.getParameter("countryName");				
 		order.setCountry(countryName);
 
+		updateProductDetails(order, request);
+		updateOrderTracks(order, request);
+		System.out.println("OrderTrack: " + order.getOrderTracks().getFirst());
 		orderService.save(order);		
 
 		ra.addFlashAttribute("message", "The order ID " + order.getId() + " has been updated successfully");
 		return defaultRedirectURL;
+	}
+
+	private void updateOrderTracks(Order order, HttpServletRequest request) {
+		String[] trackIds = request.getParameterValues("trackId");
+		String[] trackDates = request.getParameterValues("trackDate");
+		String[] trackStatues = request.getParameterValues("trackStatus");
+		String[] trackNotes = request.getParameterValues("trackNotes");
+		
+		List<OrderTrack> orderTracks = order.getOrderTracks();
+		DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss");
+		
+		for(int i = 0; i < trackIds.length; i++) {
+			OrderTrack trackRecord = new OrderTrack();
+			
+			Integer trackId = Integer.parseInt(trackIds[i]);
+			if(trackId > 0) {
+				trackRecord.setId(trackId);
+			}
+			
+			trackRecord.setOrder(order);
+			trackRecord.setStatus(OrderStatus.valueOf(trackStatues[i]));
+			trackRecord.setNotes(trackNotes[i]);
+			try {
+				trackRecord.setUpdatedTime(dateFormatter.parse(trackDates[i]));
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			orderTracks.add(trackRecord);
+		}
+	}
+
+	private void updateProductDetails(Order order, HttpServletRequest request) {
+		String[] detailIds = request.getParameterValues("detailId");
+		String[] productIds = request.getParameterValues("productId");
+		String[] productCosts = request.getParameterValues("productDetailCost");
+		String[] quantities = request.getParameterValues("quantity");
+		String[] productPrices = request.getParameterValues("productPrice");
+		String[] productSubtotals = request.getParameterValues("productSubtotal");
+		String[] productShipCosts = request.getParameterValues("productShipCost");
+		
+		Set<OrderDetail> orderDetails = order.getOrderDetails();
+		
+		for(int i = 0; i < detailIds.length; i++) {
+			System.out.println("Details ID: " + detailIds[i]);
+			System.out.println("\t Products ID: " + productIds[i]);
+			System.out.println("\t Products Cost: " + productCosts[i]);
+			System.out.println("\t Products PRice: " + productPrices[i]);
+			System.out.println("\t Quantities: " + quantities[i]);
+			System.out.println("\t Subtotal: " + productSubtotals[i]);
+			System.out.println("\t Shipcosts: " + productShipCosts[i]);
+			
+			OrderDetail orderDetail = new OrderDetail();
+			Integer detailId = Integer.parseInt(detailIds[i]);
+			if(detailId > 0) {
+				orderDetail.setId(detailId);
+			}
+			
+			orderDetail.setOrder(order);
+			orderDetail.setProduct(new Product(Integer.parseInt(productIds[i])));
+			orderDetail.setProductCost(Float.parseFloat(productCosts[i]));
+			orderDetail.setSubtotal(Float.parseFloat(productSubtotals[i]));
+			orderDetail.setShippingCost(Float.parseFloat(productShipCosts[i]));
+			orderDetail.setQuantity(Integer.parseInt(quantities[i]));
+			orderDetail.setUnitPrice(Float.parseFloat(productPrices[i]));
+			
+			orderDetails.add(orderDetail);
+		}
 	}
 }
 

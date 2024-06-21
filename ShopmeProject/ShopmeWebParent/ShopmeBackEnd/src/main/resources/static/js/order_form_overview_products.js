@@ -78,8 +78,7 @@ function setAndFormatNumberForField(fieldId, fieldValue) {
 }
 
 function getNumberValueRemovedThousandSeparator(fieldRef) {
-	fieldString = fieldRef.val().replace(/\./g, '');
-	fieldValue = fieldString.replace(/,/g, '.');
+	fieldValue = fieldRef.val().replace(",", "");
 	return parseFloat(fieldValue);
 } 
 
@@ -163,7 +162,7 @@ function processFormBeforeSubmit() {
 }
 
 function removeThousandSeparatorForField(fieldRef) {
-	fieldRef.val(fieldRef.val().replace(/,/g, ''));
+	fieldRef.val(fieldRef.val().replace(",", ""));
 }
 
 function setCountryName() {
