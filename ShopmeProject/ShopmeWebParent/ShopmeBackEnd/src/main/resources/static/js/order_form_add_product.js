@@ -14,7 +14,8 @@ $(document).ready(function() {
 		});
 
 		$("#addProductModal").modal();
-	})
+		
+	});
 }); 
 
 function addProduct(productId, productName) {
@@ -57,8 +58,8 @@ function getProductInfo(productId, shippingCost) {
 		console.log(productJson);
 		productName = productJson.name;
 		mainImagePath = contextPath.substring(0, contextPath.length - 1) + productJson.imagePath;
-		productCost = $.number(productJson.cost, 2);
-		productPrice = $.number(productJson.price, 2);
+		productCost = productJson.cost;
+		productPrice = productJson.price;
 
 		htmlCode = generateProductCode(productId, productName, mainImagePath, productCost, productPrice, shippingCost);
 		$("#productList").append(htmlCode);
@@ -105,7 +106,7 @@ function generateProductCode(productId, productName, mainImagePath, productCost,
 						<input type="text" required class="form-control m-1 cost-input"
 						    name="productDetailCost"
 							rowNumber="${nextCount}" 
-							value="${productCost}" style="max-width: 140px"/>
+							value="${formatNumber(productCost)}" style="max-width: 140px"/>
 					</td>
 				</tr>
 				<tr>
@@ -125,7 +126,7 @@ function generateProductCode(productId, productName, mainImagePath, productCost,
 						    name="productPrice"
 							id="${priceId}"
 							rowNumber="${nextCount}" 
-							value="${productPrice}" style="max-width: 140px"/>
+							value="${formatNumber(productPrice)}" style="max-width: 140px"/>
 					</td>
 				</tr>
 				<tr>
@@ -134,7 +135,7 @@ function generateProductCode(productId, productName, mainImagePath, productCost,
 						<input type="text" readonly="readonly" class="form-control m-1 subtotal-output"
 						    name="productSubtotal"
 							id="${subtotalId}" 
-							value="${productPrice}" style="max-width: 140px"/>
+							value="${formatNumber(productPrice)}" style="max-width: 140px"/>
 					</td>
 				</tr>				
 				<tr>
@@ -142,7 +143,7 @@ function generateProductCode(productId, productName, mainImagePath, productCost,
 					<td>
 						<input type="text" required class="form-control m-1 ship-input"
 						    name="productShipCost"  
-							value="${shippingCost}" style="max-width: 140px"/>
+							value="${formatNumber(shippingCost)}" style="max-width: 140px"/>
 					</td>
 				</tr>											
 			</table>
